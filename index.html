@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Языковые приемы в заголовках СМИ: кликбейт как жанр</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23ff2e88' stroke='%2314142b' stroke-width='8'/%3E%3Ctext x='50' y='72' font-size='58' font-family='Arial, sans-serif' font-weight='900' text-anchor='middle' fill='%23ffffff'%3E!%3C/text%3E%3C/svg%3E">
+
+  <style>
+    :root{
+      --bg:#fff7e6;
+      --ink:#0e0e1a;
+      --ink-soft:#3a3a55;
+      --pink:#ff2e88;
+      --yellow:#ffcc00;
+      --cyan:#00d0ff;
+      --purple:#7a3cff;
+      --green:#22c55e;
+      --red:#ff0033;
+      --card:#ffffff;
+      --radius:14px;
+      --maxw: 1120px;
+      --font-head: "Meta Pro Fixed", "Arial Black", "Impact", system-ui, sans-serif;
+      --font-body: "Meta Pro Fixed", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
+
+    body{
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      line-height: 1.6;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 8% 4%,  rgba(255,204,0,.35), transparent 40%),
+        radial-gradient(circle at 92% 12%, rgba(0,208,255,.30), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(255,46,136,.25), transparent 45%);
+      background-attachment: fixed;
+    }
+    a:focus-visible, button:focus-visible{
+      outline: 3px solid var(--cyan);
+      outline-offset: 3px;
+    }
+    .skip{
+      position: absolute; left: -9999px; top: 0;
+      background:#fff; color: var(--ink);
+      padding: 10px 16px; border: 3px solid var(--ink);
+      z-index: 200; text-decoration: none; font-weight: 800;
+    }
+    .skip:focus{ left: 12px; top: 12px; outline: 3px solid var(--cyan); }
+
+    /* ============ БЕГУЩАЯ СТРОКА ============ */
+    .ticker{
+      background: var(--ink);
+      color: var(--yellow);
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 3px solid var(--pink);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      padding: 9px 0;
+      position: relative;
+      z-index: 60;
+    }
+    .ticker__track{
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker 26s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker__track span{ margin: 0 22px; }
+    .ticker__track .sep{ color: var(--pink); }
+    @keyframes ticker{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-100%); }
+    }
+
+    /* ============ ШАПКА ============ */
+    .site-header{
+      text-align: center;
+      padding: 48px 20px 26px;
+      position: relative;
+    }
+    .live{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--red);
+      color: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 6px;
+      box-shadow: 3px 3px 0 var(--ink);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 12px;
+      transform: rotate(-2deg);
+      margin-bottom: 18px;
+    }
+    .live::before{
+      content: "";
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink{ 50%{ opacity: 0; } }
+
+    .site-title{
+      margin: 0;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(30px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+    .site-title span{ display: block; }
+    .site-title span:first-child{
+      color: var(--ink);
+      text-shadow: 5px 5px 0 var(--pink);
+    }
+    .site-title span:last-child{
+      color: var(--pink);
+      text-shadow: 5px 5px 0 var(--ink);
+      margin-top: 10px;
+      font-size: .8em;
+    }
+
+    .scroll-hint{
+      display: block;
+      text-align: center;
+      margin: 20px 0 0;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--ink);
+      letter-spacing: 2px;
+    }
+    .scroll-hint::after{
+      content: "↓";
+      display: block;
+      font-size: 26px;
+      color: var(--pink);
+      animation: bounce 1.2s infinite;
+      margin-top: 2px;
+      line-height: 1;
+    }
+    @keyframes bounce{
+      0%, 100%{ transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+
+    /* ============ МЕНЮ (липкое) ============ */
+    .site-nav{
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 12px 20px;
+      background: var(--bg);
+      border-bottom: 3px solid var(--ink);
+    }
+    .site-nav ul{
+      list-style: none; margin: 0 auto; padding: 0;
+      max-width: var(--maxw);
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    }
+    .site-nav a{
+      display: inline-block;
+      padding: 8px 14px;
+      text-decoration: none;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-size: clamp(11px, 1.15vw, 13px);
+      color: var(--ink);
+      background: #fff;
+      border: 2.5px solid var(--ink);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+    }
+    .site-nav a:hover{
+      background: var(--yellow);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .site-nav a.is-active{
+      color: #fff;
+      background: var(--pink);
+    }
+
+    /* ============ КОНТЕНТ ============ */
+    main{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 40px 20px 90px;
+    }
+    .section{ margin: 38px 0; scroll-margin-top: 110px; }
+
+    .card{
+      position: relative;
+      display: flex; gap: 28px; align-items: center;
+      background: var(--card);
+      border: 3px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 28px 24px 24px;
+      box-shadow: 8px 8px 0 var(--ink);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{
+      transform: translate(-3px, -3px);
+      box-shadow: 11px 11px 0 var(--ink);
+    }
+    .section:nth-child(even) .card{ flex-direction: row-reverse; }
+
+    .sticker{
+      position: absolute;
+      top: -18px;
+      right: 22px;
+      padding: 7px 14px;
+      background: var(--yellow);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transform: rotate(4deg);
+      z-index: 2;
+      animation: wiggle 2.6s ease-in-out infinite;
+    }
+    .sticker--hot{ background: var(--red); color: #fff; }
+    .sticker--new{ background: var(--cyan); color: var(--ink); }
+    .sticker--top{ background: var(--purple); color: #fff; }
+    .sticker--boom{ background: var(--pink); color: #fff; }
+    @keyframes wiggle{
+      0%, 100%{ transform: rotate(4deg) translateY(0); }
+      50%      { transform: rotate(-4deg) translateY(-3px); }
+    }
+
+    .media{
+      position: relative;
+      flex: 1 1 320px; min-width: 0;
+      aspect-ratio: 16 / 10;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      border: 2.5px solid var(--ink);
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(48px, 9vw, 120px);
+      color: #fff;
+      text-shadow: 3px 3px 0 var(--ink);
+      object-fit: cover;
+    }
+    .media--1{ background: linear-gradient(135deg, #ff2e88, #ffcc00); }
+    .media--2{ background: linear-gradient(135deg, #00d0ff, #7a3cff); }
+    .media--3{ background: linear-gradient(135deg, #ffcc00, #22c55e); }
+    .media--4{ background: linear-gradient(135deg, #7a3cff, #ff2e88); }
+    .media--5{ background: linear-gradient(135deg, #22c55e, #00d0ff); }
+
+    .counter{
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 4px 10px;
+      background: var(--ink);
+      color: var(--yellow);
+      border: 2.5px solid var(--yellow);
+      border-radius: 6px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 1px;
+      z-index: 3;
+      text-shadow: none;
+    }
+
+    .card-body{ flex: 1 1 320px; min-width: 0; }
+    .card-body h2{
+      margin: 0 0 12px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.05;
+      letter-spacing: -.3px;
+      color: var(--ink);
+      text-shadow: 3px 3px 0 var(--pink);
+    }
+    .card-body p{ margin: 0 0 14px; color: var(--ink-soft); font-size: clamp(15px, 1.6vw, 17px); }
+
+    .urgent{
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--red);
+      color: #fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      border-radius: 4px;
+      border: 2px solid var(--ink);
+      animation: blink 1.2s infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .hot-text{
+      background: linear-gradient(to bottom, transparent 55%, var(--yellow) 55%, var(--yellow) 92%, transparent 92%);
+      padding: 0 2px;
+      font-weight: 700;
+    }
+
+    .sub-marker{
+      display: inline-block;
+      margin: 0 0 16px;
+      padding: 5px 12px;
+      background: var(--yellow);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      box-shadow: 2px 2px 0 var(--ink);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(11px, 1.2vw, 12px);
+      letter-spacing: .8px;
+    }
+
+    .example, .mechanism{
+      margin: 0 0 12px;
+      padding: 12px 16px;
+      border: 2.5px solid var(--ink);
+      border-radius: 8px;
+      font-size: clamp(14px, 1.5vw, 16px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .example{
+      background: #fff5f9;
+      border-left-width: 10px;
+      border-left-color: var(--pink);
+    }
+    .mechanism{
+      background: #f0fbff;
+      border-left-width: 10px;
+      border-left-color: var(--cyan);
+    }
+    .example b, .mechanism b{
+      display: inline-block; margin-right: 6px; color: var(--ink);
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .example i, .mechanism i{ font-style: italic; }
+
+    /* ============ «КРАСИВЫЙ» 10-Й РАЗДЕЛ ============ */
+    .section--pretty{ margin-top: 64px; }
+    .pretty{
+      position: relative; overflow: hidden;
+      border-radius: var(--radius);
+      padding: clamp(36px, 6vw, 64px);
+      text-align: center;
+      color: #fff;
+      border: 4px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--ink);
+      background: linear-gradient(135deg,
+        #ff2e88 0%, #ffcc00 30%, #7a3cff 65%, #00d0ff 100%);
+      background-size: 300% 300%;
+      animation: pretty-shift 14s ease-in-out infinite;
+    }
+    .pretty > *{ position: relative; }
+    .pretty h2{
+      margin: 0 0 14px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: -1px;
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+    .pretty > p{
+      margin: 0 auto 26px; max-width: 640px;
+      font-size: clamp(15px, 1.9vw, 19px);
+      font-weight: 600;
+    }
+    .pretty .btn{
+      background: #fff;
+      color: var(--ink);
+    }
+    @keyframes pretty-shift{
+      0%, 100%{ background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    .today-badge{
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 6px 14px;
+      background: var(--red);
+      color: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 6px;
+      box-shadow: 3px 3px 0 var(--ink);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 2px;
+      transform: rotate(-3deg);
+    }
+
+    .sources{
+      margin-top: 32px;
+      text-align: left;
+      color: var(--ink);
+      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      padding: 20px 24px;
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+    .sources h3{
+      margin: 0 0 14px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-size: clamp(18px, 2.4vw, 22px);
+      color: var(--ink);
+    }
+    .sources ol{
+      margin: 0; padding-left: 24px;
+      font-size: clamp(13px, 1.4vw, 15px);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .sources li{ margin-bottom: 10px; }
+    .sources a{
+      color: var(--purple);
+      font-weight: 700;
+      text-decoration: underline;
+      word-break: break-word;
+    }
+    .sources a:hover{ color: var(--pink); }
+
+    /* ============ КНОПКИ ============ */
+    .links{ display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn{
+      display: inline-block;
+      padding: 14px 26px;
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: clamp(14px, 1.5vw, 16px);
+      color: #fff;
+      background: var(--pink);
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease;
+      cursor: pointer;
+    }
+    .btn:hover{
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .btn:active{
+      transform: translate(4px, 4px);
+      box-shadow: 1px 1px 0 var(--ink);
+    }
+    .btn--pulse{ animation: pulse-shadow 1.6s ease-in-out infinite; }
+    @keyframes pulse-shadow{
+      0%, 100%{ box-shadow: 5px 5px 0 var(--ink); }
+      50%      { box-shadow: 9px 9px 0 var(--ink); }
+    }
+
+    /* ============ ПЛАВАЮЩИЕ КНОПКИ ============ */
+    .to-top{
+      position: fixed; right: 22px; bottom: 22px;
+      width: 56px; height: 56px;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      background: var(--pink);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 5px 5px 0 var(--ink);
+      opacity: 0; visibility: hidden; transform: translateY(12px);
+      transition: opacity .2s ease, transform .2s ease, visibility .2s ease, box-shadow .12s ease;
+      z-index: 50;
+    }
+    .to-top.is-visible{ opacity: 1; visibility: visible; transform: none; }
+    .to-top:hover{ transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+    .to-top:active{ transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--ink); }
+
+    .float-cta{
+      position: fixed;
+      left: 22px; bottom: 22px;
+      padding: 14px 20px;
+      background: var(--yellow);
+      color: var(--ink);
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 13px;
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      box-shadow: 5px 5px 0 var(--ink);
+      opacity: 0; visibility: hidden; transform: translateY(12px);
+      transition: opacity .2s ease, transform .2s ease, visibility .2s ease, box-shadow .12s ease, background .12s ease;
+      z-index: 50;
+      cursor: pointer;
+    }
+    .float-cta.is-visible{
+      opacity: 1; visibility: visible; transform: none;
+      animation: pulse-shadow 1.6s ease-in-out infinite;
+    }
+    .float-cta:hover{
+      background: var(--pink); color: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--ink);
+      animation: none;
+    }
+
+    /* ============ БОЛЬШИЕ КРАСНЫЕ УКАЗАТЕЛЬНЫЕ СТРЕЛКИ ============ */
+    .arrow{
+      display: none;
+      position: absolute;
+      top: 50%;
+      z-index: 5;
+      pointer-events: none;
+    }
+    /* Порог поднят до 1600px: на узких экранах стрелки не помещаются */
+    @media (min-width: 1600px){
+      .arrow{ display: block; }
+    }
+    .arrow::after{
+      content: "";
+      display: block;
+      width: 130px;
+      height: 70px;
+      background: var(--red);
+      filter: drop-shadow(5px 5px 0 var(--ink));
+    }
+
+    /* Стрелка слева от карточки, указывает вправо, отодвинута от карточки */
+    .arrow--point-right{
+      left: -220px;
+      animation: arrow-bounce-right 1.1s ease-in-out infinite;
+    }
+    .arrow--point-right::after{
+      clip-path: polygon(
+        0% 22%,
+        58% 22%,
+        58% 0%,
+        100% 50%,
+        58% 100%,
+        58% 78%,
+        0% 78%
+      );
+    }
+
+    /* Стрелка справа от карточки, указывает влево, отодвинута от карточки */
+    .arrow--point-left{
+      right: -220px;
+      animation: arrow-bounce-left 1.1s ease-in-out infinite;
+    }
+    .arrow--point-left::after{
+      clip-path: polygon(
+        100% 22%,
+        42% 22%,
+        42% 0%,
+        0% 50%,
+        42% 100%,
+        42% 78%,
+        100% 78%
+      );
+    }
+
+    @keyframes arrow-bounce-right{
+      0%, 100%{ transform: translateY(-50%) translateX(0) rotate(-4deg); }
+      50%      { transform: translateY(-50%) translateX(16px) rotate(-4deg); }
+    }
+    @keyframes arrow-bounce-left{
+      0%, 100%{ transform: translateY(-50%) translateX(0) rotate(4deg); }
+      50%      { transform: translateY(-50%) translateX(-16px) rotate(4deg); }
+    }
+
+    /* ============ РЕКЛАМНЫЕ ВСПЛЫВАЮЩИЕ ОКНА ============ */
+    .ad{
+      position: fixed;
+      width: 150px;
+      z-index: 45;
+      display: none;
+      font-family: var(--font-body);
+    }
+    @media (min-width: 1440px){
+      .ad.is-visible{
+        display: block;
+        animation: ad-pop .5s cubic-bezier(.2,1.4,.4,1) both;
+      }
+    }
+
+    @keyframes ad-pop{
+      from{ opacity: 0; transform: scale(.6) translateY(30px); }
+      to{ opacity: 1; transform: none; }
+    }
+
+    .ad__close{
+      position: absolute;
+      top: -10px; right: -10px;
+      width: 24px; height: 24px;
+      border: 2.5px solid var(--ink);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--ink);
+      z-index: 3;
+      padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .12s ease, color .12s ease;
+    }
+    .ad__close:hover{ background: var(--red); color: #fff; }
+
+    .ad__label{
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 2px 6px;
+      background: var(--ink);
+      color: var(--yellow);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 3px;
+    }
+
+    .ad__cta{
+      display: block;
+      text-align: center;
+      padding: 8px 6px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1px;
+      border: 2.5px solid var(--ink);
+      border-radius: 6px;
+      box-shadow: 3px 3px 0 var(--pink);
+      transition: transform .1s ease, box-shadow .1s ease;
+      margin-top: 8px;
+    }
+    .ad__cta:hover{ transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--pink); }
+    .ad__cta:active{ transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--pink); }
+
+    .ad--1{
+      left: calc(50% - 706px);
+      top: 120px;
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 14px 12px 12px;
+      transform-origin: top left;
+    }
+    .ad--1 .ad__big{
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1;
+      text-align: center;
+      color: var(--ink);
+      text-shadow: 2px 2px 0 var(--pink);
+      transform: rotate(-4deg);
+      margin: 4px 0;
+    }
+    .ad--1 .ad__text{
+      text-align: center;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--ink);
+      margin: 6px 0 2px;
+    }
+
+    .ad--2{
+      right: calc(50% - 706px);
+      top: 120px;
+      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 12px;
+      transform-origin: top right;
+    }
+    .ad--2 .ad__icon{
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      border: 2.5px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 20px;
+      margin: 0 auto 8px;
+      animation: blink 1.4s infinite;
+    }
+    .ad--2 .ad__title{
+      text-align: center;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--ink);
+    }
+    .ad--2 .ad__text{
+      text-align: center;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin: 4px 0 0;
+      font-weight: 600;
+    }
+
+    .ad--3{
+      left: calc(50% - 706px);
+      top: 44vh;
+      width: 150px;
+      height: 150px;
+    }
+    .ad--3 .stamp{
+      position: relative;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: var(--pink);
+      border: 3px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      text-decoration: none;
+      transform: rotate(-8deg);
+      animation: stamp-wobble 3s ease-in-out infinite;
+    }
+    @keyframes stamp-wobble{
+      0%,100%{ transform: rotate(-8deg) scale(1); }
+      50%    { transform: rotate(8deg) scale(1.03); }
+    }
+    .ad--3 .stamp__ring{
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255,255,255,.75);
+      animation: spin 14s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+    .ad--3 .stamp__text{
+      position: relative;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: #fff;
+      text-shadow: 1px 1px 0 var(--ink);
+      text-align: center;
+      max-width: 100px;
+      line-height: 1.1;
+    }
+    .ad--3 .stamp__big{
+      position: relative;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 34px;
+      color: #fff;
+      text-shadow: 2px 2px 0 var(--ink);
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .ad--4{
+      right: calc(50% - 706px);
+      top: 40vh;
+      width: 46px;
+      transform-origin: top right;
+    }
+    .ad--4 .ribbon{
+      display: block;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      background: var(--ink);
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      box-shadow: 6px 6px 0 var(--pink);
+      padding: 16px 6px;
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--yellow);
+      text-align: center;
+      text-decoration: none;
+      transition: background .15s ease, color .15s ease;
+    }
+    .ad--4 .ribbon:hover{ background: var(--purple); color: #fff; }
+
+    .ad--5{
+      left: calc(50% - 706px);
+      bottom: 110px;
+      width: 170px;
+      transform-origin: bottom left;
+    }
+    .ad--5 .chat{
+      position: relative;
+      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 12px;
+    }
+    .ad--5 .ad__label{ margin-bottom: 8px; }
+    .ad--5 .chat__avatar{
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--cyan);
+      border: 2.5px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .ad--5 .chat__title{
+      font-family: var(--font-head);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: .5px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .ad--5 .chat__text{
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin: 0 0 8px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .ad--5 .ad__cta{ margin-top: 0; }
+
+
+    /* ===== СНОСКИ И НАУЧНЫЕ БЛОКИ ===== */
+    .fn{ font-size:.7em; font-weight:800; margin-left:2px; vertical-align:super; line-height:0; white-space:nowrap; }
+    .fn a{ color:var(--purple); text-decoration:none; padding:0 1px; }
+    .fn a:hover{ color:#fff; background:var(--pink); }
+    .sources li:target{ background:var(--yellow); }
+    .card-body ul, .card-body ol{ margin:0 0 14px; padding-left:22px; color:var(--ink-soft); font-size:clamp(15px,1.6vw,17px); }
+    .card-body li{ margin-bottom:6px; }
+    .goal{ margin:0 0 14px; padding:12px 16px; background:#fffbe0; border:2.5px solid var(--ink); border-left-width:10px; border-left-color:var(--yellow); border-radius:8px; box-shadow:4px 4px 0 var(--ink); color:var(--ink); font-weight:700; }
+    .asis-tobe{ width:100%; border-collapse:collapse; margin:0 0 14px; font-size:clamp(13px,1.5vw,15px); }
+    .asis-tobe th, .asis-tobe td{ border:2.5px solid var(--ink); padding:8px 10px; text-align:left; vertical-align:top; }
+    .asis-tobe th{ background:var(--ink); color:var(--yellow); text-transform:uppercase; letter-spacing:1px; font-size:12px; }
+    .asis-tobe td:first-child{ font-weight:800; background:#f4f4fb; width:22%; }
+    .asis-tobe td.asis{ background:#fff0f0; }
+    .asis-tobe td.tobe{ background:#effff3; }
+    .note{ font-size:13px; color:var(--ink-soft); margin:10px 0 0; }
+    .stat{ display:inline-block; margin:0 12px 8px 0; padding:6px 12px; background:var(--yellow); border:2.5px solid var(--ink); border-radius:8px; box-shadow:3px 3px 0 var(--ink); font-weight:900; font-size:18px; color:var(--ink); }
+    .site-note{ max-width:760px; margin:18px auto 0; font-size:14px; color:var(--ink-soft); font-weight:600; }
+
+    @media (max-width: 860px){
+      .card, .section:nth-child(even) .card{ flex-direction: column; align-items: stretch; }
+      .media{ flex: 0 0 auto; width: 100%; }
+      .float-cta{ font-size: 12px; padding: 12px 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .ticker__track,
+      .sticker,
+      .live::before,
+      .urgent,
+      .scroll-hint::after,
+      .pretty,
+      .btn--pulse,
+      .float-cta.is-visible,
+      .ad.is-visible,
+      .ad--2 .ad__icon,
+      .ad--3 .stamp,
+      .ad--3 .stamp__ring,
+      .arrow--point-right,
+      .arrow--point-left{
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip" href="#content">Перейти к содержимому</a>
+
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>ВАЖНО</span><span class="sep">★</span>
+      <span>ШОК-КОНТЕНТ</span><span class="sep">★</span>
+      <span>ЭКСКЛЮЗИВ</span><span class="sep">★</span>
+      <span>10 ПРИЁМОВ КЛИКБЕЙТА</span><span class="sep">★</span>
+      <span>НЕ ПРОПУСТИ</span><span class="sep">★</span>
+      <span>ТОЛЬКО СЕЙЧАС</span><span class="sep">★</span>
+      <span>УЗНАЙ ПРАВДУ</span><span class="sep">★</span>
+      <span>ВАЖНО</span><span class="sep">★</span>
+      <span>ШОК-КОНТЕНТ</span><span class="sep">★</span>
+      <span>ЭКСКЛЮЗИВ</span><span class="sep">★</span>
+      <span>10 ПРИЁМОВ КЛИКБЕЙТА</span><span class="sep">★</span>
+      <span>НЕ ПРОПУСТИ</span><span class="sep">★</span>
+      <span>ТОЛЬКО СЕЙЧАС</span><span class="sep">★</span>
+      <span>УЗНАЙ ПРАВДУ</span><span class="sep">★</span>
+    </div>
+  </div>
+
+  <!-- ШАПКА -->
+  <header class="site-header">
+    <div class="live">LIVE</div>
+    <h1 class="site-title">
+      <span>Языковые приемы<br>в заголовках СМИ</span>
+      <span>кликбейт как жанр</span>
+    </h1>
+    <p class="site-note">Страница дополняет презентацию проекта. Оформление в стилистике кликбейта выбрано намеренно: интерфейс демонстрирует описанные приёмы.</p>
+    <div class="scroll-hint">Листай вниз</div>
+  </header>
+
+  <!-- МЕНЮ -->
+  <nav class="site-nav" aria-label="Разделы страницы">
+    <ul>
+      <li><a href="#intro-1">Актуальность</a></li>
+      <li><a href="#intro-2">Объект и предмет</a></li>
+      <li><a href="#intro-3">Цель и задачи</a></li>
+      <li><a href="#intro-4">Гипотеза</a></li>
+      <li><a href="#section-1">Сенсационализм</a></li>
+      <li><a href="#section-2">Умолчание</a></li>
+      <li><a href="#section-3">Вопрос без ответа</a></li>
+      <li><a href="#section-4">Оценочная лексика</a></li>
+      <li><a href="#section-5">Слова-пустышки</a></li>
+      <li><a href="#section-6">Парцелляция</a></li>
+      <li><a href="#section-7">Числа</a></li>
+      <li><a href="#section-8">Графика</a></li>
+      <li><a href="#section-9">Ложная близость</a></li>
+      <li><a href="#section-10">Тест и источники</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+
+    <!-- ВВОДНЫЕ БЛОКИ -->
+    <section id="intro-1" class="section" aria-labelledby="intro-1-title">
+      <article class="card">
+        <span class="sticker sticker--hot">Зачем</span>
+        <div class="media media--1" role="img" aria-label="Иллюстрация к блоку «Актуальность»"><span>А</span></div>
+        <div class="card-body">
+          <h2 id="intro-1-title">Актуальность</h2>
+          <p class="sub-marker">Почему тема важна</p>
+          <p><span class="stat">7 %</span><span class="stat">≈10 %</span></p>
+          <p>В газете «Московский комсомолец» кликбейтом является в среднем 7 % заголовков, в телеграм-канале издания — около 10 %<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 4]</a></sup>.</p>
+          <p>Заголовок занимает сильную позицию в тексте<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 2]</a></sup>; в цифровых медиа ему отдают приоритет над содержанием<sup class="fn"><a href="#src-11" title="Источник 11">[11 → 2, с. 2]</a></sup>. Кликбейт вышел за пределы онлайн-СМИ: его используют пресса, реклама и телевидение<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 3]</a></sup>.</p>
+          <p>Оценки учёных расходятся: от «манипулирования сознанием» до «креативной подачи» (кликбейт 1.0 и 2.0)<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 4; 10 → 2, с. 4]</a></sup>, а интерес к манипулятивным средствам в медиаконтенте растёт<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 4]</a></sup>.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="intro-2" class="section" aria-labelledby="intro-2-title">
+      <article class="card">
+        <span class="sticker sticker--top">Рамки</span>
+        <div class="media media--2" role="img" aria-label="Иллюстрация к блоку «Объект и предмет исследования»"><span>О</span></div>
+        <div class="card-body">
+          <h2 id="intro-2-title">Объект и предмет исследования</h2>
+          <p class="sub-marker">Что изучаем и на каком аспекте</p>
+          <p><b>Объект:</b> заголовки СМИ (публикации газеты и посты телеграм-каналов) как речевой жанр<sup class="fn"><a href="#src-1" title="Источник 1">[1, с. 159; 2, с. 1]</a></sup>.</p>
+          <p><b>Предмет:</b> языковые приёмы, превращающие заголовок в кликбейт, и жанровые признаки, которые они реализуют<sup class="fn"><a href="#src-2" title="Источник 2">[2; 7 → 2, с. 3]</a></sup>.</p>
+          <p class="note">Примеры заголовков без ссылки на источник составлены авторами проекта; реальные примеры взяты из публикаций «МК»<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 5–6]</a></sup>.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="intro-3" class="section" aria-labelledby="intro-3-title">
+      <article class="card">
+        <span class="sticker sticker--new">Цель</span>
+        <div class="media media--3" role="img" aria-label="Иллюстрация к блоку «Цель и задачи»"><span>Ц</span></div>
+        <div class="card-body">
+          <h2 id="intro-3-title">Цель и задачи</h2>
+          <p class="sub-marker">Что хотим получить и как</p>
+          <p class="goal">Цель: на основе жанрового подхода выявить, систематизировать и описать языковые приёмы, превращающие заголовок СМИ в кликбейт, и показать механизм их воздействия на читателя<sup class="fn"><a href="#src-1" title="Источник 1">[1; 2; 5]</a></sup>.</p>
+          <p><b>Задачи:</b></p>
+          <ol>
+            <li>Определить понятие «кликбейт» и обосновать его рассмотрение как речевого жанра<sup class="fn"><a href="#src-1" title="Источник 1">[1; 2]</a></sup>.</li>
+            <li>Выделить жанровые признаки кликбейта: тематическое содержание, стиль, композицию, адресата<sup class="fn"><a href="#src-1" title="Источник 1">[1, с. 159–160]</a></sup>.</li>
+            <li>Классифицировать языковые приёмы: лексические, синтаксические, графические<sup class="fn"><a href="#src-2" title="Источник 2">[2; 6; 7]</a></sup>.</li>
+            <li>Описать механизм воздействия приёмов на читателя и подобрать иллюстративные примеры<sup class="fn"><a href="#src-2" title="Источник 2">[2; 5]</a></sup>.</li>
+            <li>Создать дополнительный материал: интерактивную страницу и тест для самопроверки (внизу страницы).</li>
+          </ol>
+          <p class="note">Цифры в квадратных скобках — номера источников. Запись «[8 → 2, с. 3]» означает: работа 8 цитируется по статье 2, с. 3. Примеры без ссылки на источник составлены авторами проекта.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="intro-4" class="section" aria-labelledby="intro-4-title">
+      <article class="card">
+        <span class="sticker sticker--boom">Гипотеза</span>
+        <div class="media media--4" role="img" aria-label="Иллюстрация к блоку «Гипотеза исследования»"><span>Г</span></div>
+        <div class="card-body">
+          <h2 id="intro-4-title">Гипотеза исследования</h2>
+          <p class="sub-marker">Исходное положение → предполагаемый результат</p>
+          <p>Если рассматривать кликбейт как речевой жанр, то в заголовках разных форматов (газета, телеграм-канал) обнаруживаются воспроизводимые жанровые признаки и устойчивый набор языковых приёмов<sup class="fn"><a href="#src-1" title="Источник 1">[1, с. 159–160; 2, с. 4–5]</a></sup>.</p>
+          <table class="asis-tobe">
+            <thead><tr><th></th><th>Исходное положение</th><th>Предполагаемый результат</th></tr></thead>
+            <tbody>
+              <tr><td>Оценка кликбейта</td><td class="asis">Оценивается преимущественно как манипуляция<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 4]</a></sup></td><td class="tobe">Описан как речевой жанр с устойчивыми признаками<sup class="fn"><a href="#src-1" title="Источник 1">[1, с. 159–160]</a></sup></td></tr>
+              <tr><td>Описание приёмов</td><td class="asis">Приёмы описаны в отдельных типологиях<sup class="fn"><a href="#src-6" title="Источник 6">[6; 7 → 2, с. 3]</a></sup></td><td class="tobe">Приёмы сведены в систему: лексика, синтаксис, графика<sup class="fn"><a href="#src-2" title="Источник 2">[2; 6; 7]</a></sup></td></tr>
+              <tr><td>Жанровый статус и механизм</td><td class="asis">Жанровый статус кликбейта не определён</td><td class="tobe">Для каждого приёма установлен механизм воздействия<sup class="fn"><a href="#src-2" title="Источник 2">[2; 5]</a></sup></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 1 — стрелка слева, указывает вправо -->
+    <section id="section-1" class="section" aria-labelledby="section-1-title">
+      <article class="card">
+        <span class="arrow arrow--point-right" aria-hidden="true"></span>
+        <span class="sticker sticker--hot">ХИТ</span>
+        <div class="media media--1" role="img" aria-label="Иллюстрация к разделу 1">
+          <span>1</span>
+          <span class="counter">01 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-1-title">Сенсационализм</h2>
+          <p class="sub-marker">Шок, скандал, тайна → эмоция</p>
+          <p>Сенсационализм — использование <span class="hot-text">слов-маркеров</span>, создающих ощущение исключительности события: «шок», «скандал», «впервые», «тайна», «ужас».<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 3; 8 → 2]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Шок! Учёные 20 лет скрывали это от нас».</i></p>
+          <p class="mechanism"><b>Механизм:</b> слова-маркеры («шок», «скандал», «секрет») обещают эмоцию, а не информацию.<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 3]</a></sup><span class="urgent">Важно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 2 — стрелка справа, указывает влево -->
+    <section id="section-2" class="section" aria-labelledby="section-2-title">
+      <article class="card">
+        <span class="arrow arrow--point-left" aria-hidden="true"></span>
+        <span class="sticker sticker--boom">БОМБА</span>
+        <div class="media media--2" role="img" aria-label="Иллюстрация к разделу 2">
+          <span>2</span>
+          <span class="counter">02 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-2-title">Умолчание</h2>
+          <p class="sub-marker">«…и», «но что…» → разгадка</p>
+          <p>Умолчание (информационный разрыв) — заголовок намеренно <span class="hot-text">не называет</span> ключевой субъект или результат действия.<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 5]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Вдове запретили рожать от покойника»</i> (МК, 23.07.2025) — в тексте только отказ в ЭКО по юридическим причинам<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 5–6]</a></sup>. Типовой пример авторов: <i>«Он вышел на сцену… и зал замер».</i></p>
+          <p class="mechanism"><b>Механизм:</b> замалчивание важных подробностей — самый частый приём: 29 % в газете и 36 % в телеграм-канале «МК».<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 5]</a></sup><span class="urgent">Срочно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 3 -->
+    <section id="section-3" class="section" aria-labelledby="section-3-title">
+      <article class="card">
+        <span class="sticker sticker--top">ТОП</span>
+        <div class="media media--3" role="img" aria-label="Иллюстрация к разделу 3">
+          <span>3</span>
+          <span class="counter">03 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-3-title">Вопрос без ответа</h2>
+          <p class="sub-marker">«?» → ответ</p>
+          <p>Вопрос без ответа — заголовок в форме вопроса, ответ на который даётся <span class="hot-text">только в тексте</span>.</p>
+          <p class="example"><b>Пример:</b> <i>«Как похудеть без спорта? Ответ вас удивит».</i></p>
+          <p class="mechanism"><b>Механизм:</b> вопрос вызывает любопытство — основную эмоцию кликбейта; ответ дан только в тексте. Форма вопроса — наблюдение авторов.<sup class="fn"><a href="#src-8" title="Источник 8">[8 → 2, с. 3]</a></sup><span class="urgent">Только сейчас</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 4 -->
+    <section id="section-4" class="section" aria-labelledby="section-4-title">
+      <article class="card">
+        <span class="sticker sticker--new">НОВОЕ</span>
+        <div class="media media--4" role="img" aria-label="Иллюстрация к разделу 4">
+          <span>4</span>
+          <span class="counter">04 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-4-title">Оценочная лексика</h2>
+          <p class="sub-marker">наглый, шокирующий → оценка</p>
+          <p>Оценочная лексика — субъективные прилагательные и наречия, <span class="hot-text">навязывающие отношение</span>: «наглый», «шокирующий», «невероятный».<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Наглое заявление чиновника возмутило сеть».</i></p>
+          <p class="mechanism"><b>Механизм:</b> эпитеты навязывают оценку вместо факта.<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3]</a></sup><span class="urgent">Важно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 5 -->
+    <section id="section-5" class="section" aria-labelledby="section-5-title">
+      <article class="card">
+        <span class="sticker">СЕКРЕТ</span>
+        <div class="media media--5" role="img" aria-label="Иллюстрация к разделу 5">
+          <span>5</span>
+          <span class="counter">05 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-5-title">Слова-пустышки</h2>
+          <p class="sub-marker">это, нечто, кое-что → конкретика</p>
+          <p>Слова-«пустышки» — местоимения и общие слова вместо конкретных наименований: «это», «нечто», «кое-что», «один человек».<sup class="fn"><a href="#src-6" title="Источник 6">[6 → 2, с. 4–5]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Это изменит всё: в России приняли новый закон».</i></p>
+          <p class="mechanism"><b>Механизм:</b> универсальная формулировка подходит к любому тексту и скрывает конкретику.<sup class="fn"><a href="#src-6" title="Источник 6">[6 → 2, с. 4–5]</a></sup><span class="urgent">Срочно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 6 -->
+    <section id="section-6" class="section" aria-labelledby="section-6-title">
+      <article class="card">
+        <span class="sticker sticker--hot">ХИТ</span>
+        <div class="media media--1" role="img" aria-label="Иллюстрация к разделу 6">
+          <span>6</span>
+          <span class="counter">06 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-6-title">Парцелляция</h2>
+          <p class="sub-marker">многоточие, короткие фразы → драма</p>
+          <p>Парцелляция и многоточие — разрыв предложения на части, создающий <span class="hot-text">паузу-интригу</span>.<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Врачи назвали продукт, который убивает… Но его едят все».</i></p>
+          <p class="mechanism"><b>Механизм:</b> первая часть — обыденное, вторая — намёк на поворот; знаки препинания усиливают экспрессию.<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3]</a></sup><span class="urgent">Только сейчас</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 7 -->
+    <section id="section-7" class="section" aria-labelledby="section-7-title">
+      <article class="card">
+        <span class="sticker sticker--top">7 ФАКТОВ</span>
+        <div class="media media--2" role="img" aria-label="Иллюстрация к разделу 7">
+          <span>7</span>
+          <span class="counter">07 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-7-title">Числа</h2>
+          <p class="sub-marker">«5 причин», «7 фактов» → структура</p>
+          <p>Числа и «точные» обещания — цифры создают <span class="hot-text">иллюзию конкретики</span> и структурированности: «5 признаков», «7 фактов».<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3; 12]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«5 признаков, что вас обманывают на работе».</i></p>
+          <p class="mechanism"><b>Механизм:</b> манипулирование цифрами; «листикл» — современный приём подачи информации.<sup class="fn"><a href="#src-7" title="Источник 7">[7 → 2, с. 3; 12]</a></sup><span class="urgent">Важно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 8 -->
+    <section id="section-8" class="section" aria-labelledby="section-8-title">
+      <article class="card">
+        <span class="sticker sticker--boom">ШОК</span>
+        <div class="media media--3" role="img" aria-label="Иллюстрация к разделу 8">
+          <span>8</span>
+          <span class="counter">08 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-8-title">Графика</h2>
+          <p class="sub-marker">КАПС, эмодзи, «!!!» → срочность</p>
+          <p>КАПС, эмодзи, восклицательные знаки — визуальное выделение, имитирующее <span class="hot-text">крик и срочность</span>.<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 4–5; 9 → 2]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«ЭТО НАДО ВИДЕТЬ! Срочно!».</i></p>
+          <p class="mechanism"><b>Механизм:</b> эмодзи, красный кружок, «!» и молния выделяют заголовок среди других постов; в телеграме кликбейт часто сопровождается крупными фото и пиктограммами.<sup class="fn"><a href="#src-2" title="Источник 2">[2, с. 1, 4–5]</a></sup><span class="urgent">Срочно</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 9 -->
+    <section id="section-9" class="section" aria-labelledby="section-9-title">
+      <article class="card">
+        <span class="sticker sticker--new">ВЫ НЕ ПОВЕРИТЕ</span>
+        <div class="media media--4" role="img" aria-label="Иллюстрация к разделу 9">
+          <span>9</span>
+          <span class="counter">09 / 09</span>
+        </div>
+        <div class="card-body">
+          <h2 id="section-9-title">Ложная близость</h2>
+          <p class="sub-marker">«вы не поверите» → близость</p>
+          <p>Ложная близость — разговорная и сниженная лексика, имитирующая <span class="hot-text">дружеское общение</span>: «вы не поверите», «капец», «с ума сойти».<sup class="fn"><a href="#src-7" title="Источник 7">[7; 8 → 2, с. 3]</a></sup></p>
+          <p class="example"><b>Пример:</b> <i>«Вы не поверите, что нашла эта женщина в своей квартире».</i></p>
+          <p class="mechanism"><b>Механизм:</b> обращение на «ты» имитирует диалог и играет на желании быть первым.<sup class="fn"><a href="#src-7" title="Источник 7">[7; 8 → 2, с. 3]</a></sup><span class="urgent">Только сейчас</span></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- РАЗДЕЛ 10 — «КРАСИВЫЙ» -->
+    <section id="section-10" class="section section--pretty" aria-labelledby="section-10-title">
+      <div class="pretty">
+        <span class="today-badge">Только сейчас</span>
+        <h2 id="section-10-title">Проверьте себя</h2>
+        <p>Выполните тест для проверки себя — и загляните в источники, на которых построен этот материал.</p>
+        <a class="btn btn--pulse"
+           href="https://forms.yandex.ru/cloud/6ad35d23852af3b2b0c7a24d"
+           target="_blank" rel="noopener noreferrer">Пройти тест</a>
+
+        <div class="sources">
+          <h3>Список источников</h3>
+          <ol>
+
+            <li id="src-1">Бахтин М. М. Проблема речевых жанров // Собрание сочинений: в 7 т. Т. 5. М.: Русские словари, 1996. С. 159–206.</li>
+            <li id="src-2">Дегальцева А. В. Кликбейт в публикациях издания «Московский комсомолец» // СибСкрипт. 2026. Т. 28. № 1. С. 1–11. DOI: <a href="https://doi.org/10.21603/sibscript-2026-28-1-1-11" target="_blank" rel="noopener noreferrer">10.21603/sibscript-2026-28-1-1-11</a>.</li>
+            <li id="src-3">Клушина Н. И., Николаева А. В. Введение в интернет-стилистику: учебник. М.: ФЛИНТА, 2020. 240 с. <i>(дополнительная литература)</i></li>
+            <li id="src-4">Лукина М. М. (ред.) Интернет-СМИ: Теория и практика: учеб. пособие. М.: Аспект Пресс, 2010. 348 с. <i>(дополнительная литература)</i></li>
+            <li id="src-5">Patin S. When a headline triggers a click // Approaching Digital Interfaces, Social Media and Multimodality from the French Context. New York: Routledge, 2026. P. 142–166. DOI: <a href="https://doi.org/10.4324/9781003663003-8" target="_blank" rel="noopener noreferrer">10.4324/9781003663003-8</a>.</li>
+            <li id="src-6">Лутовинова О. В. Манипулятивные приёмы в кликбейтных заголовках интернет-СМИ // Актуальные проблемы филологии и педагогической лингвистики. 2023. № 2. С. 55–69. <i>(цит. по [2])</i></li>
+            <li id="src-7">Самарцев О. Р., Латенкова В. М., Фокина Д. С. Типологические признаки кликбейта в заголовочном блоке современных масс-медиа // Вестник ТвГУ. Сер.: Филология. 2020. № 1. С. 155–163. <i>(цит. по [2])</i></li>
+            <li id="src-8">Есакова М. Н., Кольцова Ю. Н. «Кликбейт» как новая форма привлечения внимания читателя // Русский язык и культура в зеркале перевода. 2021. № 1. С. 340–348. <i>(цит. по [2])</i></li>
+            <li id="src-9">Дускаева Л. Р. Речевая организация метатекста телеграм-поста // Вестник Московского ун-та. Сер. 10. Журналистика. 2023. Т. 48. № 1. С. 30–65. <i>(цит. по [2])</i></li>
+            <li id="src-10">Кузнецов Е. С. Сопоставление заголовка и содержания публикации как ключ к пониманию специфики кликбейта // Знак: проблемное поле медиаобразования. 2021. № 4. С. 133–139. <i>(цит. по [2])</i></li>
+            <li id="src-11">Градюшко А. А. Кликбейт в цифровой журналистике: стратегии и особенности // Труды БГТУ. Сер. 4. 2025. № 1. С. 34–40. <i>(цит. по [2])</i></li>
+            <li id="src-12">Богданова Д. А. Кликбейты и листиклы — современные приёмы подачи информации онлайновыми медиа // Народное образование. 2019. № 4. С. 203–210. <i>(цит. по [2])</i></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ РЕКЛАМНЫЕ ВСПЛЫВАЮЩИЕ ОКНА ============ -->
+
+  <aside class="ad ad--1" aria-label="Реклама">
+    <button class="ad__close" type="button" aria-label="Закрыть рекламу">×</button>
+    <span class="ad__label">Реклама</span>
+    <div class="ad__big">-50%</div>
+    <div class="ad__text">Только сейчас</div>
+    <a class="ad__cta" href="#section-10">Успеть</a>
+  </aside>
+
+  <aside class="ad ad--2" aria-label="Реклама">
+    <button class="ad__close" type="button" aria-label="Закрыть рекламу">×</button>
+    <span class="ad__label">Реклама</span>
+    <div class="ad__icon">!</div>
+    <div class="ad__title">Вам сообщение</div>
+    <div class="ad__text">Вы пропустили главное</div>
+    <a class="ad__cta" href="#section-1">Открыть</a>
+  </aside>
+
+  <aside class="ad ad--3" aria-label="Реклама">
+    <button class="ad__close" type="button" aria-label="Закрыть рекламу">×</button>
+    <a class="stamp" href="#section-10">
+      <span class="stamp__ring"></span>
+      <span class="stamp__text">Только сейчас</span>
+      <span class="stamp__big">-50%</span>
+    </a>
+  </aside>
+
+  <aside class="ad ad--4" aria-label="Реклама">
+    <button class="ad__close" type="button" aria-label="Закрыть рекламу">×</button>
+    <a class="ribbon" href="#section-10">Узнай всё о кликбейте ★ Только сейчас ★</a>
+  </aside>
+
+  <aside class="ad ad--5" aria-label="Реклама">
+    <button class="ad__close" type="button" aria-label="Закрыть рекламу">×</button>
+    <div class="chat">
+      <span class="ad__label">Реклама</span>
+      <div class="chat__avatar">Э</div>
+      <div class="chat__title">Эксперт</div>
+      <p class="chat__text">Привет! Хочешь узнать все секреты кликбейта?</p>
+      <a class="ad__cta" href="#section-1">Да, хочу!</a>
+    </div>
+  </aside>
+
+  <button id="toTop" class="to-top" type="button" aria-label="Наверх">↑</button>
+  <a id="floatCta" class="float-cta" href="#section-10">Пройти тест →</a>
+
+  <script>
+    (function () {
+      const toTopBtn  = document.getElementById('toTop');
+      const floatCta  = document.getElementById('floatCta');
+      const navLinks  = Array.from(document.querySelectorAll('.site-nav a'));
+      const sections  = Array.from(document.querySelectorAll('main section[id]'));
+
+      function onScroll() {
+        const show = window.scrollY > 400;
+        toTopBtn.classList.toggle('is-visible', show);
+        const inLast = window.scrollY + window.innerHeight >
+                       document.getElementById('section-10').offsetTop + 200;
+        floatCta.classList.toggle('is-visible', show && !inLast);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      toTopBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      function setActive(id) {
+        navLinks.forEach(function (a) {
+          const isActive = a.getAttribute('href') === '#' + id;
+          a.classList.toggle('is-active', isActive);
+          if (isActive) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) setActive(entry.target.id);
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        sections.forEach(function (s) { observer.observe(s); });
+      }
+
+      /* ============================================================
+         РЕКЛАМНЫЕ ОКНА:
+         - Каждые 20 секунд появляется одно новое окно (по порядку 1→5).
+         - Уже открытые окна НЕ скрываются: они видны, пока их не закроют.
+         - Закрытое крестиком окно возвращается ровно через 20 секунд.
+         - z-index окон (45) выше меню (40), так что они рисуются поверх.
+         ============================================================ */
+      const ads = Array.from(document.querySelectorAll('.ad'));
+      const AD_INTERVAL_MS = 20000;
+      let adIndex = 0;
+
+      function showNextAd() {
+        if (adIndex >= ads.length) return;
+        ads[adIndex].classList.add('is-visible');
+        adIndex++;
+      }
+      setInterval(showNextAd, AD_INTERVAL_MS);
+
+      document.querySelectorAll('.ad__close').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const ad = btn.closest('.ad');
+          if (!ad) return;
+          ad.classList.remove('is-visible');
+          setTimeout(function () {
+            ad.classList.add('is-visible');
+          }, AD_INTERVAL_MS);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
